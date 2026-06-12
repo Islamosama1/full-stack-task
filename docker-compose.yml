@@ -4,21 +4,34 @@ services:
       context: ./apps/frontend
       target: dev
     ports:
-      - '3000:3000'
+      - '${FRONTEND_PORT}:3000'
     volumes:
       - ./apps/frontend:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV}
 
   backend:
     build:
       context: ./apps/backend
       target: dev
     ports:
-      - '4000:4000'
+      - '${BACKEND_PORT}:4000'
     volumes:
       - ./apps/backend:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV}
+      - MONGODB_URI=${MONGODB_URI}
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    ports:
+      - '${MONGO_PORT}:27017'
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

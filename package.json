@@ -1,0 +1,29 @@
+{
+  "name": "full-stack-task",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22.20.0",
+    "npm": ">=11.13.0"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w apps/frontend\" \"npm run dev -w apps/backend\"",
+    "build": "npm run build -w apps/frontend && npm run build -w apps/backend",
+    "lint": "eslint apps",
+    "lint:fix": "eslint apps --fix",
+    "format": "prettier --write \"apps/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"apps/**/*.{ts,tsx}\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.4",
+    "typescript-eslint": "^8.61.0"
+  }
+}

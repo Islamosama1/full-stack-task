@@ -12,7 +12,7 @@ Minimal monorepo with React (frontend) and NestJS (backend) using npm workspaces
 ```
 apps/
   frontend/   # React 19 + Vite + TypeScript  → :3000
-  backend/    # NestJS 10 + TypeScript         → :4000
+  backend/    # NestJS 11 + TypeScript         → :4000
 ```
 
 ## Getting Started
@@ -32,6 +32,10 @@ npm run dev
 | `npm run lint:fix`     | Lint and auto-fix                   |
 | `npm run format`       | Format all files with Prettier      |
 | `npm run format:check` | Check formatting without writing    |
+
+## API Docs
+
+Swagger UI is available at `http://localhost:4000/docs` when the backend is running.
 
 ## Docker
 

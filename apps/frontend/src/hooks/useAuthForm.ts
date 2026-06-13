@@ -14,7 +14,7 @@ export function useAuthForm<TData extends FieldValues>(
     handleSubmit,
     formState: { errors },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } = useForm<TData>({ resolver: zodResolver(schema as any) })
+  } = useForm<TData>({ resolver: zodResolver(schema as any), mode: 'onTouched' })
 
   const mutation = useMutation({
     mutationFn: async (data: TData) => {

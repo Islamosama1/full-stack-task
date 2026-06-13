@@ -5,7 +5,11 @@
   "scripts": {
     "dev": "node --watch -r ts-node/register -r tsconfig-paths/register src/main.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/main"
+    "start": "node dist/main",
+    "test": "jest",
+    "test:unit": "jest --testPathPatterns=testing/unit",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.26",
@@ -26,10 +30,14 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@nestjs/testing": "^11.1.26",
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
     "@types/ms": "^0.7.34",
     "@types/node": "^22.0.0",
+    "jest": "^30.4.2",
+    "ts-jest": "^29.4.11",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2"

@@ -26,7 +26,7 @@ export function LoginForm({ onNavigateToSignup }: LoginFormProps) {
     return (
       <SuccessCard
         title={`Welcome back, ${state.name}!`}
-        message="You are now logged in."
+        message="Welcome to the application."
         onLogout={handleLogout}
         loggingOut={loggingOut}
       />

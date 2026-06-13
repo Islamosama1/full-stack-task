@@ -8,6 +8,7 @@ import { UserRepository } from './repositories/user.repository'
 import { AuthService } from './auth.service'
 import { AuthCookieService } from './auth-cookie.service'
 import { AuthController } from './auth.controller'
+import { JwtAuthGuard } from './guards/jwt-auth.guard'
 
 @Module({
   imports: [
@@ -21,6 +22,6 @@ import { AuthController } from './auth.controller'
     }),
   ],
   controllers: [AuthController],
-  providers: [UserRepository, AuthService, AuthCookieService],
+  providers: [UserRepository, AuthService, AuthCookieService, JwtAuthGuard],
 })
 export class AuthModule {}

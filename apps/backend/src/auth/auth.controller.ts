@@ -1,8 +1,9 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Res } from '@nestjs/common'
+import { Body, Controller, HttpCode, HttpStatus, Post, Res, UseGuards } from '@nestjs/common'
 import { Response } from 'express'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
+  ApiCookieAuth,
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
@@ -15,6 +16,7 @@ import { AuthCookieService } from './auth-cookie.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { LoginDto } from './dto/login.dto'
 import { CookieAuthResponseDto } from './dto/auth-response.dto'
+import { JwtAuthGuard } from './guards/jwt-auth.guard'
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -55,9 +57,12 @@ export class AuthController {
   }
 
   @Post('logout')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiCookieAuth()
   @ApiOperation({ summary: 'Clear the auth cookie' })
   @ApiNoContentResponse({ description: 'Logged out successfully' })
+  @ApiUnauthorizedResponse({ description: 'Not authenticated' })
   logout(@Res({ passthrough: true }) res: Response): void {
     this.authCookieService.clear(res)
   }

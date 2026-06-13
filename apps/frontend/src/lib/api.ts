@@ -1,5 +1,6 @@
 import axios, { isAxiosError } from 'axios'
 import type { AuthResponse, ApiResult } from './types'
+import type { LoginFormData, SignupFormData } from './schemas'
 
 export type { AuthUser, AuthResponse, ApiResult } from './types'
 
@@ -10,7 +11,7 @@ const client = axios.create({
 
 function extractMessage(data: unknown): string {
   const raw = (data as { message?: string | string[] })?.message
-  return (Array.isArray(raw) ? raw[0] : raw) ?? 'Something went wrong. Please try again.'
+  return (Array.isArray(raw) ? raw[0] : raw) || 'Something went wrong. Please try again.'
 }
 
 async function post<T>(
@@ -31,8 +32,8 @@ async function post<T>(
   }
 }
 
-export const signup = (body: { name: string; email: string; password: string }) =>
+export const signup = (body: SignupFormData) =>
   post<AuthResponse>('/auth/signup', body, { 409: 'That email is already registered.' })
 
-export const login = (body: { email: string; password: string }) =>
+export const login = (body: LoginFormData) =>
   post<AuthResponse>('/auth/login', body, { 401: 'Invalid email or password.' })

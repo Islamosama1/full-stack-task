@@ -18,11 +18,3 @@ export const signupSchema = z.object({
 
 export type LoginFormData = z.infer<typeof loginSchema>
 export type SignupFormData = z.infer<typeof signupSchema>
-
-export interface LoginFormProps {
-  onNavigateToSignup: () => void
-}
-
-export interface SignupFormProps {
-  onNavigateToLogin: () => void
-}

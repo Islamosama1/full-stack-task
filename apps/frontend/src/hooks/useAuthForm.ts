@@ -26,7 +26,7 @@ export function useAuthForm<TData extends FieldValues>(
 
   const logoutMutation = useMutation({
     mutationFn: logout,
-    onSuccess: () => mutation.reset(),
+    onSettled: () => mutation.reset(),
   })
 
   const state: FormState = mutation.isPending

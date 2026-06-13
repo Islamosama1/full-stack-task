@@ -21,9 +21,10 @@ async function bootstrap() {
   const config = new DocumentBuilder().setTitle('API').setVersion('1.0').build()
   SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, config))
 
-  await app.listen(4000)
-  console.log('Backend running on http://localhost:4000')
-  console.log('Swagger docs at  http://localhost:4000/docs')
+  const port = configService.get<number>('BACKEND_PORT', 4000)
+  await app.listen(port)
+  console.log(`Backend running on http://localhost:${port}`)
+  console.log(`Swagger docs at  http://localhost:${port}/docs`)
 }
 
 bootstrap().catch(console.error)

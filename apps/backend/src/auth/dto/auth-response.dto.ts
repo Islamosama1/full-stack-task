@@ -11,3 +11,7 @@ export class AuthResponseDto {
   @ApiProperty() accessToken!: string
   @ApiProperty({ type: UserProfileDto }) user!: UserProfileDto
 }
+
+export class CookieAuthResponseDto {
+  @ApiProperty({ type: UserProfileDto }) user!: UserProfileDto
+}

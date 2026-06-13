@@ -7,6 +7,7 @@ export type { AuthUser, AuthResponse, ApiResult } from './types'
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? '',
   headers: { 'Content-Type': 'application/json' },
+  withCredentials: true,
 })
 
 function extractMessage(data: unknown): string {
@@ -37,3 +38,7 @@ export const signup = (body: SignupFormData) =>
 
 export const login = (body: LoginFormData) =>
   post<AuthResponse>('/auth/login', body, { 401: 'Invalid email or password.' })
+
+export async function logout(): Promise<void> {
+  await client.post('/auth/logout')
+}

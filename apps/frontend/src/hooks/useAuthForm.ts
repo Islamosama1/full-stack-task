@@ -21,9 +21,6 @@ export function useAuthForm<TData extends FieldValues>(
       if (!result.ok) throw new Error(result.message)
       return result.data
     },
-    onSuccess: (data) => {
-      localStorage.setItem('accessToken', data.accessToken)
-    },
   })
 
   const state: FormState = mutation.isPending
@@ -36,5 +33,5 @@ export function useAuthForm<TData extends FieldValues>(
 
   const onSubmit: SubmitHandler<TData> = (data) => mutation.mutate(data)
 
-  return { state, register, errors, submit: handleSubmit(onSubmit) }
+  return { state, register, errors, submit: handleSubmit(onSubmit), reset: mutation.reset }
 }

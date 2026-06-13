@@ -1,9 +1,10 @@
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/ui/form-field'
 import { SuccessCard } from '@/components/ui/SuccessCard'
 import { ErrorAlert } from '@/components/ui/ErrorAlert'
 import { useAuthForm } from '@/hooks/useAuthForm'
-import { login } from '@/lib/api'
+import { login, logout } from '@/lib/api'
 import { loginSchema, type LoginFormData } from '@/lib/schemas'
 
 interface LoginFormProps {
@@ -11,10 +12,25 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onNavigateToSignup }: LoginFormProps) {
-  const { state, register, errors, submit } = useAuthForm<LoginFormData>(loginSchema, login)
+  const { state, register, errors, submit, reset } = useAuthForm<LoginFormData>(loginSchema, login)
+  const [loggingOut, setLoggingOut] = useState(false)
+
+  async function handleLogout() {
+    setLoggingOut(true)
+    await logout()
+    setLoggingOut(false)
+    reset()
+  }
 
   if (state.status === 'success')
-    return <SuccessCard title={`Welcome back, ${state.name}!`} message="You are now logged in." />
+    return (
+      <SuccessCard
+        title={`Welcome back, ${state.name}!`}
+        message="You are now logged in."
+        onLogout={handleLogout}
+        loggingOut={loggingOut}
+      />
+    )
 
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-4">

@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/ui/form-field'
 import { SuccessCard } from '@/components/ui/SuccessCard'
 import { ErrorAlert } from '@/components/ui/ErrorAlert'
 import { useAuthForm } from '@/hooks/useAuthForm'
-import { signup, logout } from '@/lib/api'
+import { signup } from '@/lib/api'
 import { signupSchema, type SignupFormData } from '@/lib/schemas'
 
 interface SignupFormProps {
@@ -12,18 +11,10 @@ interface SignupFormProps {
 }
 
 export function SignupForm({ onNavigateToLogin }: SignupFormProps) {
-  const { state, register, errors, submit, reset } = useAuthForm<SignupFormData>(
+  const { state, register, errors, submit, handleLogout, loggingOut } = useAuthForm<SignupFormData>(
     signupSchema,
     signup,
   )
-  const [loggingOut, setLoggingOut] = useState(false)
-
-  async function handleLogout() {
-    setLoggingOut(true)
-    await logout()
-    setLoggingOut(false)
-    reset()
-  }
 
   if (state.status === 'success')
     return (

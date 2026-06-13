@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { type ZodSchema } from 'zod'
 import { useMutation } from '@tanstack/react-query'
 import type { FormState, AuthResponse, ApiResult } from '@/lib/types'
+import { logout } from '@/lib/api'
 
 export function useAuthForm<TData extends FieldValues>(
   schema: ZodSchema<TData>,
@@ -23,6 +24,11 @@ export function useAuthForm<TData extends FieldValues>(
     },
   })
 
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => mutation.reset(),
+  })
+
   const state: FormState = mutation.isPending
     ? { status: 'loading' }
     : mutation.isSuccess
@@ -33,5 +39,13 @@ export function useAuthForm<TData extends FieldValues>(
 
   const onSubmit: SubmitHandler<TData> = (data) => mutation.mutate(data)
 
-  return { state, register, errors, submit: handleSubmit(onSubmit), reset: mutation.reset }
+  return {
+    state,
+    register,
+    errors,
+    submit: handleSubmit(onSubmit),
+    reset: mutation.reset,
+    handleLogout: () => logoutMutation.mutate(),
+    loggingOut: logoutMutation.isPending,
+  }
 }

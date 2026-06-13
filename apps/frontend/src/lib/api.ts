@@ -40,5 +40,12 @@ export const login = (body: LoginFormData) =>
   post<AuthResponse>('/auth/login', body, { 401: 'Invalid email or password.' })
 
 export async function logout(): Promise<void> {
-  await client.post('/auth/logout')
+  try {
+    await client.post('/auth/logout')
+  } catch (err) {
+    if (isAxiosError(err) && err.response) {
+      throw new Error(extractMessage(err.response.data))
+    }
+    throw new Error('Unable to reach the server.')
+  }
 }
